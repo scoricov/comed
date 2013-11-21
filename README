@@ -1,0 +1,54 @@
+Comed - Comet server capable of high load
+
+DESCRIPTION
+
+This is a Perl implementation of Comet. The server was proven to withstand high
+loads with more then 60000 simultanious user channels in production environment.
+Comed performins authentication for clients against an external HTTP resource
+based on client's session stored in cookies.
+
+
+USAGE
+
+  Start:
+    $0 -c <config_file> [-d [-p <pid_file>] [-u <UID>] [-g <GID>] ]
+
+  Stop:
+    $0 -S -p <pid_file>
+
+
+
+
+INSTALLATION
+
+To install this module, run the following commands:
+
+	perl Makefile.PL
+	make
+	make test
+	make install
+
+DEPENDENCIES
+
+Perl modules:
+
+AnyEvent 5.21
+AnyEvent::HTTP 1.45
+EV 3.9
+Try::Tiny 0.06
+JSON::XS 2.26
+Twiggy 0.1006
+Config::General 2.48
+Log::Dispatch 2.26
+
+Libraries:
+
+libev 3.9
+
+
+COPYRIGHT AND LICENCE
+
+Copyright (C) 2010, Alexey Skorikov
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

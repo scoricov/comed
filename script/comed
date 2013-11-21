@@ -1,0 +1,68 @@
+#!/usr/bin/perl
+
+use strict;
+
+use Getopt::Std;
+use FindBin;
+use lib "$FindBin::Bin/../lib";
+
+eval 'use Comed';
+die "It looks like you don't have the Comed installed. $@" if $@;
+
+use Comed;
+use Comed::Log;
+use Comed::Daemon qw(start_daemon stop_daemon);
+
+
+$SIG{__WARN__} = sub { WARNING $_[0] };
+$SIG{__DIE__}  = sub {
+    CRITICAL $_[0] unless ($^S || !defined($^S));
+    die $_[0];
+};
+
+sub print_usage
+{
+    print <<EOF_USAGE;
+Usage:
+
+  Start:
+    $0 -c <config_file> [-d [-p <pid_file>] [-u <UID>] [-g <GID>] ]
+
+  Stop:
+    $0 -S -p <pid_file>
+
+EOF_USAGE
+    exit;
+}
+
+my %opts; getopts('hp:dSc:u:g:', \%opts);
+$opts{h} && print_usage();
+my $pid_file = $opts{p};
+
+if ($opts{S} && defined $pid_file) {
+    stop_daemon($pid_file);
+    exit;
+}
+
+defined (my $config_file = $opts{c}) or print_usage();
+
+my $comed  = Comed->new($config_file);
+my $config = $comed->config;
+
+defined $pid_file or $pid_file = $config->{pid_file}; # please update perl
+defined $pid_file or $pid_file = 'comed.pid';         # to use // feature
+
+my $daemonize = $opts{d} || $config->{daemonize};
+
+if ($daemonize)
+{
+    my ($uid, $gid) = ($opts{u}, $opts{g});
+    defined $uid or $uid = $config->{uid};
+    defined $gid or $gid = $config->{gid};
+
+    start_daemon($pid_file, $uid, $gid);
+}
+
+$comed->start;
+
+__END__

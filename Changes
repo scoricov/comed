@@ -1,0 +1,28 @@
+Changes history for Comed
+
+1.88   Dec 16 14:47:17 2010
+       Added ability to publish messages with a delay;
+       Module bundling.
+
+1.62   Dec 10 18:01:32 2010
+       Statistics view.
+
+1.62   Dec  8 19:31:55 2010
+       Comed sender tool;
+       Test coverage.
+
+0.98   Nov 26 12:29:04 2010
+       JSON deserialization.
+
+0.82   Nov 21 18:06:14 2010
+       Logging support.
+
+0.60   Oct 29 18:12:52 2010
+       Port reuse feature for Inbox.
+
+0.46   Oct 25 11:37:18 2010
+       Enhanced daemon capabilities;
+       Enhanced MQ preformance.
+
+0.10   Oct  5 14:26:53 2010
+       Initial release.

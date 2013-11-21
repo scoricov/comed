@@ -1,0 +1,44 @@
+#!/usr/bin/perl
+
+use strict;
+use bytes;
+use Socket;
+use Getopt::Std;
+
+
+my %opts; getopts('l:f:p:u:h:dhKT:L:DSb', \%opts);
+my $hostname  = $opts{h} || '0.0.0.0';
+my $port      = $opts{p} || 7777;
+my $broadcast = $opts{b};
+defined (my $user_name = $opts{u})
+    or die 'User name should be specified: -u <user_name>';
+
+my $proto = getprotobyname('udp') or die "$!";
+my $ip_addr = inet_aton($hostname) or die "$!";
+my $sin = pack_sockaddr_in($port, $ip_addr) or die "$!";
+my $line;
+
+
+while (defined($line = <STDIN>))
+{
+    post($user_name, $line) or die "post failed: $@";
+}
+
+sub post
+{
+    my ($user_name, @messages) = @_;
+    for (@messages) {
+        chomp;
+        my $msg = "$user_name,$_";
+        my $msg_length  = length($msg) or return 0;
+        socket(SOCK, PF_INET, SOCK_DGRAM, $proto) or return 0;
+        if ($broadcast) {
+            setsockopt(SOCK, SOL_SOCKET, SO_BROADCAST, pack("l", 1))
+                or return 0;
+        }
+        my $sent_length = send(SOCK, $msg, 0, $sin);
+        close SOCK;
+        return 0 unless ( $msg_length == $sent_length );
+    }
+    return 1;
+}

@@ -1,0 +1,16 @@
+Changes
+conf/comed-example.conf
+lib/Comed.pm
+lib/Comed/Daemon.pm
+lib/Comed/Inbox.pm
+lib/Comed/Log.pm
+lib/Comed/MessageQueue.pm
+lib/Comed/Web.pm
+Makefile.PL
+MANIFEST
+README
+script/comed
+script/comedsend
+t/00.load.t
+t/010.mq.t
+t/pod.t
