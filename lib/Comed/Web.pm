@@ -10,6 +10,9 @@ use Comed::MessageQueue;
 use Data::Dumper;
 
 
+our $VERSION = 1.88;
+
+
 sub new
 {
     my ($class, @args) = @_;

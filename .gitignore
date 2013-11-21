@@ -3,3 +3,5 @@ MANIFEST.bak
 MYMETA.*
 _build/
 blib/
+Makefile.old
+MANIFEST.bak

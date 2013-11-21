@@ -24,7 +24,7 @@ WriteMakefile(
         'version'             => 0,
     },
     PREREQ_FATAL        => 1,
-    EXE_FILES           => [qw| script/comed script/comedsend script/comedmux |],
+    EXE_FILES           => [qw| script/comed script/comedsend |],
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean               => { FILES => 'Comed-*' },
 );
